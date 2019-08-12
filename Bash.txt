@@ -1,0 +1,190 @@
+
+touch test_{1..10}
+touch test_{01..10}
+touch {prueba,test}
+touch {prueba,test}_{01..05}{a..z}
+
+ls -1 | wc -l ---> Counts total files on directory	
+ls | more     ---> Display content by page
+
+chmod 000 *_015* ---> Won't accept files with _015 extension
+
+cp -v * ../test_folder ---> -v = verbosity
+cp -v * ../test_folder 1>../success.txt 2>../errors.txt ---> (1) Validate ones, (2) The ones who causes errors.
+cp -v * ../test_folder &> ../log.txt   ---> Will copy 1 and 2 together.
+
+ls > test.txt 
+
+ping -c 1 example.com | grep 'bytes from' | cut -d = -f 4   ---> Will Return field 4 which value incluldes = from bytes from (Delimeter, field)
+
+echo "Hello Tom" | awk '{$2="Dani"; print$0}'
+echo "Hello Tom" | awk '{$1="You"; $3=$2; $2="Suck"; print $0}' 
+
+echo statement
+echo 'statement'
+echo "statement" -> \ to print it literally
+
+declare -i d=123        # d is an integer
+declare -r e=456        # e is read-only
+declare -l f="LOLcats"  # f is lolcatds
+declare -u g="LOLcats"  # g is LOLCATS
+
+
+[BUILT-IN VARIABLES]
+
+$HOME
+$PWD
+$MACHTYPE
+$HOSTNAME
+$BASH_VERSION
+$SECONDS
+$0 name of the script
+
+
+[ARITHMETIC OPERATIONS]
+
+   OPERATION            OPERATOR	
+
+Exponentiation	   -	 $a ** $b
+Multiplication     -	 $a * $b
+Division	   -	 $a / $b
+Modulo		   -	 $a % $b
+Addition	   -	 $a + $b
+Subtraction        -	 $a - $b
+
+Bash arithmetics only work with integers, in case we want to use float we need to use: bc -l
+g=$(echo 1/3 |bc -l)
+echo $g	
+
+
+[COMPARASION OPERATIONS]
+
+
+[[ expression ]] -> returns { 1=False 0=True }
+
+   OPERATION            OPERATOR	
+
+Less than	   	   -	 [[ $a < $b ]]		[[ $a -lt $b ]]
+Greater than     	   -	 [[ $a > $b ]]		[[ $a -gt $b ]]	
+Less than or equal To	   -	 [[ $a <= $b ]]		[[ $a -le $b ]]
+Greater than or equal To   -	 [[ $a >= $b ]]		[[ $a -ge $b ]]	
+Equal	 	  	   -	 [[ $a == $b ]]		[[ $a -eq $b ]]
+Not equal        	   -	 [[ $a != $b ]]		[[ $a -ne $b ]]
+
+
+[LOGIC OPERATIONS]
+
+   OPERATION            OPERATOR	
+
+Logical AND	   -	 [[ $a && $b ]]
+Logical OR         -	 [[ $a || $b ]]
+Logical NOT	   -	 [[ ! $a ]]
+
+Is null?	   -	 [[ -z $a ]]
+Is not null	   -	 [[ -n $a ]]
+
+
+[WORKING WITH SCRIPTS]
+
+#: a="hello"
+#: b="world"
+#: c=$a$b
+#: echo $c
+#: echo ${#a} --> length from string
+#: d=${c:3} --> from 3rd character starting
+#: e=${c:3:4} --> from 3rd character up to 4 more
+#: echo ${c: -4} 
+#: echo ${c: -4:3} --> From 4 last characters, we extract first 3
+#: fruit="apple banana banana cherry"
+#: echo ${fruit/banana/durian}
+apple durian banana cherry
+#: echo ${fruit//banana//durian}
+apple durian durian cherry 
+#: ${fruit/#apple/durian} --> Will replace if it is at the beginning of the string
+#: ${fruit/%banana/durian} --> Will replace if it is at the end of the string
+#: ${fruit/c*/durian} --> Both of them
+
+[COLORED TEXT ANSI]
+
+echo -e '\033[34;42mColor Text\033[0m'
+
+echo -e -> Echo with escaping
+\033[34;42m -> Escaped sequence
+Color Text -> String to Print out
+\033[0m -> Resets the color
+
+(STYLED TEXT)
+
+Foreground     -> tput setaf [0-7]
+Background     -> tput setab [0-7]
+No style       -> tput sgv0
+Bold	       -> tput bold
+Low Intensity  -> tput dim
+Underline      -> tput smul
+Blinking       -> tput blink
+Reverse        -> tput rev
+
+
+    STYLE
+
+   No style		-	0
+   Bold			-	1
+   Low Intensity	-	2
+   Underline		-	4	
+   Blinking		-	5
+   Reverse		-	7
+   Invisible		-	8
+
+
+[DATE AND PRINTF]
+
+#: date +"%d-%m-%Y"
+#: date +"%H-%M-%S"
+
+printf "Name:\t%s\nID:\t%04d\n" "Scott" "12"
+Name:	Scott
+ID:	0012
+
+printf "Name:\t%s\nID:\t%d\n" "Scott" "12"
+Name:	Scott
+ID:	12
+
+
+[ARRAY]
+
+declare -A myarray
+myarray[color]=blue
+myarray["office building"]="HQ West"
+
+echo ${myarray["office building"]} is ${myarray[color]}
+
+
+[IF STATEMENT]
+
+
+#!/bin/bash
+
+read -p "Insert a number: " input
+#number=5
+if [ $input -gt  4 ]; then
+
+	echo $input is greater than 4!
+else
+	echo $input is not greater than 4!
+fi
+
+read -p "Insert a string: " a
+
+if [[ $a =~ [0-9]+ ]]; then
+	echo "There are numbers in the string: $a"
+else
+	echo "There are no numbers in the string: $a"
+fi
+
+
+
+
+
+
+
+
